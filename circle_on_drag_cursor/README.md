@@ -1,12 +1,27 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Uber Frontend Interview: Overlapping Circles
 
-Currently, two official plugins are available:
+# Problem Statement
+# The circles will have specific behaviors based on user actions such as dragging, clicking, and overlapping. The application should dynamically update the circle's size during a drag operation and detect when two circles overlap, changing the color of the second circle in such cases.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# When left mouse button click:
+# - draw a circle size on drag 
+# - increase the circle size on drag
+# - on mouse leave => the final circle
+# - if left clicked without a drag then clear left circle
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# When right mouse button click:
+# - draw a circle size on drag 
+# - increase the circle size on drag
+# - on mouse leave => the final circle
+# - if right clicked without a drag then clear right circle
+
+# Circle overlap detection:
+# If circle overlaps, the later circle in the sequence should change its color
+# The overlap should be recalculated every time a circle is created or updated.
+
+# Replacing Circles:
+# Each time the user draws a circle with the left or right mouse button, the existing circle for that button should be replaces with the new one.
+
