@@ -19,7 +19,8 @@
 # - if right clicked without a drag then clear right circle
 
 # Circle overlap detection:
-# If circle overlaps, the later circle in the sequence should change its color
+# initialy both circle should be red
+# If circle overlap then second circle should change to blue
 # The overlap should be recalculated every time a circle is created or updated.
 
 # Replacing Circles:
