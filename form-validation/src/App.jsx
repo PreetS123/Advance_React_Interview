@@ -1,16 +1,35 @@
 import { useRef } from "react";
 import "./App.css";
+import validationSchema from "./Utils/validationSchema";
 
 function App() {
   const formRef = useRef(null);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(formRef.current);
+    const values = Object.fromEntries(formData.entries());
+    values.skills = formData.getAll("skills");
+    values.terms = values.terms == "on";
+
+    try {
+      await validationSchema.validate(values, { abortEarly: false });
+      console.log("Form Data:", values);
+    } catch (err) {
+      console.log("Error ::", err);
+    }
+  };
 
   return (
     <>
       <div className="mx-auto h-screen  w-[80%]">
         <h1 className="text-2xl text-center my-10">Basic forms</h1>
-        <div className="border-1 border-gray-200 h-full w-2xl p-10 rounded-lg mx-auto">
-          <form ref={formRef}  className="grid gap-4 w-full align-center">
+        <div className="border-1 border-gray-200 w-2xl p-10 rounded-lg mx-auto">
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="grid gap-4 w-full align-center"
+          >
             <input
               type="text"
               name="name"
@@ -77,13 +96,13 @@ function App() {
               placeholder="Country"
               className="border p-2 w-full"
             />
-            <div>
+            <div className="flex gap-2">
               <label>Skills:</label>
-              {["ReactJS", "NodeJS", "MongoDB", "Express"]?.map((skill) => {
-                <label key={skill} className="block">
+              {["ReactJS", "NodeJS", "MongoDB", "Express"]?.map((skill) => (
+                <label key={skill} className="block text-gray-500 ">
                   <input type="checkbox" name="skills" value={skill} /> {skill}
-                </label>;
-              })}
+                </label>
+              ))}
             </div>
             <input
               type="file"
