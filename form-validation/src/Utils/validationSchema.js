@@ -21,7 +21,7 @@ const validationSchema = Yup.object({
     city: Yup.string().required("City is required"),
     state: Yup.string().required("State is required"),
     zip: Yup.string()
-      .matches(/^[0-9]{5}$/, "Invalid Zip Code")
+      .matches(/^[0-9]{6}$/, "Invalid Zip Code")
       .required("Zip Code is required"),
   }),
   country: Yup.string().required("Country is required"),
