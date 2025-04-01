@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
 import "./App.css";
-import validationSchema from "./Utils/validationSchema";
 import YupValidation from "./components/YupValidation";
+import useOnlineNotification from "./customHooks/useOnlineNotification";
 
 function App() {
+  useOnlineNotification();
   
   return (
     <>
