@@ -4,8 +4,8 @@ import { challenges } from "../utils/routes";
 
 const Navbar: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  // const dropDownRef = useRef<Map<string, HTMLDivElement>>(new Map());
-  const dropDownRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const dropDownRef = useRef<Map<string, HTMLDivElement>>(new Map());
+  // const dropDownRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -20,10 +20,10 @@ const Navbar: React.FC = () => {
     }
   };
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    // document.addEventListener("mousedown", handleClickOutside);
+    // return () => {
+    //   document.removeEventListener("mousedown", handleClickOutside);
+    // };
   }, []);
   return (
     <>
@@ -43,12 +43,7 @@ const Navbar: React.FC = () => {
               </button>
               {openDropdown == phase && (
                 <div
-                ref={(el) => {
-                  if (el) {
-                    dropDownRef.current[phase] = el;
-                  }
-                }}
-                
+                  // ref={(el) => el && dropDownRef.current.set(phase, el)}
                   className="fixed top-14 mt-2 w-40 bg-white text-black rounded shadow-lg z-1000"
                 >
                   {challenges[phase]?.map((challenge) => (
