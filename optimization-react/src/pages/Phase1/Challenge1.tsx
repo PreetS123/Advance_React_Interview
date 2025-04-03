@@ -44,7 +44,14 @@ export const Challenge1 = () => {
         </div>
       </div>
       <CustomModal isOpen={isUserModal} onClose={() => setIsUserModal(false)} title="Add Users">
-      <p>This is a sample modal using Tailwind CSS.</p>
+      {/* <p>This is a sample modal using Tailwind CSS.</p> */}
+      <div className="w-full p-2 flex flex-col gap-2 mb-2">
+      <input type="text" className="border-1 border-gray-400 rounded-sm w-full h-10 p-1 px-2" placeholder="Add username"/>
+      </div>
+      <div className="border-t-1 border-gray-200 flex flex-row justify-end items-center gap-3 py-1">
+      <button className="h-8 w-15 self-end rounded-xl border-1 border-red-950 bg-red-800 text-red-50" onClick={() => setIsUserModal(false)}>Cancel</button>
+      <button className="h-8 w-15 self-end rounded-xl border-1 border-green-400 bg-green-200 text-green-50">Add</button>
+      </div>
       </CustomModal>
     </>
   );
