@@ -18,6 +18,7 @@ const TodoInput = () => {
     ) {
       dispatch(addTodo(inputText));
     }
+    setInputText("");
   };
 
   return (
