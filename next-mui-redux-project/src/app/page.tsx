@@ -15,6 +15,9 @@ export default function Home() {
         <Link href={"/userInfo"}>
           <Button variant="contained"> Go to user List</Button>
         </Link>
+        <Link href={"/myForm"}>
+          <Button variant="contained"> Go to Form List</Button>
+        </Link>
       </Stack>
     </Box>
   );
