@@ -12,7 +12,7 @@ export default function Home() {
         <Link href={"/todoApp"}>
           <Button variant="contained"> My Todo List</Button>
         </Link>
-        <Link href={"/userinfo"}>
+        <Link href={"/userInfo"}>
           <Button variant="contained"> Go to user List</Button>
         </Link>
       </Stack>
