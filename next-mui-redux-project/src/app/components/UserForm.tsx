@@ -2,6 +2,9 @@
 
 import { Alert, Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../reduxStore";
+import { addSubmission } from "../reduxStore/formSlice";
 
 interface formData {
   name: string;
@@ -9,6 +12,7 @@ interface formData {
 }
 
 const UserForm = () => {
+  const dispatch= useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<formData>({ name: "", email: "" });
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -27,6 +31,8 @@ const UserForm = () => {
     }
 
     console.log("sumitted", formData);
+    dispatch(addSubmission(formData));
+
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
