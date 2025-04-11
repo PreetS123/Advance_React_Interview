@@ -3,6 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface UserFormData {
     name: string;
     email: string;
+    phone: string;
+    age: number;
+    password:string;
+    gender: 'male' | 'female' | 'other';
   }
 interface FormState {
   submittedData: UserFormData[];

@@ -15,7 +15,7 @@ const MyFormComp = () => {
           <Typography variant="h6">Submissions:</Typography>
           {formData?.map((data, i) => (
             <Typography key={i}>
-              📝 {data?.name} - {data?.email}
+              👤 {data.name}, 📧 {data.email}, 📱 {data.phone}, 🎂 {data.age}, 🧠 {data.gender}
             </Typography>
           ))}
         </Stack>

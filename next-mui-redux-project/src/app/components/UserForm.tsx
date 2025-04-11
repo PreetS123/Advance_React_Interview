@@ -1,61 +1,108 @@
 "use client";
 
 import { Alert, Button, Stack, TextField, Typography } from "@mui/material";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../reduxStore";
-import { addSubmission } from "../reduxStore/formSlice";
+import { addSubmission, UserFormData } from "../reduxStore/formSlice";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-interface formData {
-  name: string;
-  email: string;
-}
+const schemas = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  phone: yup
+    .string()
+    .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
+    .required("Phone number is required"),
+  age: yup
+    .number()
+    .typeError("Age must be number")
+    .min(18, "Minimum age is 18")
+    .max(60, "Max age is 60")
+    .required("Age is required."),
+  password: yup
+    .string()
+    .min(6, "Must be of 6 digits")
+    .required("Password is required"),
+  gender: yup
+    .string()
+    .oneOf(["male", "female", "other"], "select gender")
+    .required("Gender is required"),
+});
 
 const UserForm = () => {
-  const dispatch= useDispatch<AppDispatch>();
-  const [formData, setFormData] = useState<formData>({ name: "", email: "" });
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<UserFormData>({
+    resolver: yupResolver(schemas),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email) {
-      setError("Both field are required.");
-      setSubmitted(false);
-      return;
-    }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError("Please enter a valid email");
-      setSubmitted(false);
-      return;
-    }
-
-    console.log("sumitted", formData);
-    dispatch(addSubmission(formData));
-
+  const onSubmit = (data: UserFormData) => {
+    console.log("sumitted", data);
+    dispatch(addSubmission(data));
+    reset();
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Stack spacing={2}>
           <Typography variant="h5">User Form</Typography>
           <TextField
             label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            {...register("name")}
+            helperText={errors?.name?.message}
+            error={!errors.name}
           />
           <TextField
             label="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            {...register("email")}
+            error={!errors.email}
+            helperText={errors?.email?.message}
           />
-          {error && <Alert severity="error">{error}</Alert>}
-          {submitted && <Alert>Form submitted successfully</Alert>}
+          <TextField
+            label="Phone number"
+            {...register("phone")}
+            error={!errors.phone}
+            helperText={errors?.phone?.message}
+          />
+          <TextField
+            label="age"
+            {...register("age")}
+            error={!errors.age}
+            helperText={errors.age?.message}
+          />
+          <TextField
+            label="password"
+            {...register("password")}
+            error={!errors.password}
+            helperText={errors?.password?.message}
+          />
+          <Stack direction={'row'} spacing={2}>
+            <Typography>Gender:</Typography>
+            <label>
+              <input type='radio' value='male' {...register('gender')}/>
+              Male
+            </label>
+            <label>
+              <input type='radio' value='female' {...register('gender')}/>
+              Female
+            </label>
+            <label>
+              <input type='radio' value='other' {...register('gender')}/>
+              Other
+            </label>
+          </Stack>
+          {errors.gender && <Typography color="error">{errors.gender.message}</Typography>}
+          {isSubmitSuccessful && <Alert>Form submitted successfully</Alert>}
           <Button type="submit" variant="contained">
             Submit
           </Button>
